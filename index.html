@@ -1,0 +1,70 @@
+<!html>
+<body>
+<script>
+
+var field = [];
+for (li = 1; li <= 10; li++){
+	field[li] = [];
+	for (ci = 1; ci <= 10; ci++){
+		field[li][ci] = 0;
+	}
+
+}
+
+for (nl = 1; nl <= 5; nl++) {
+
+	flr = Math.round(Math.random()*9)+1;
+	fcr = Math.round(Math.random()*9)+1;
+	if (field[flr][fcr] === 0) {
+		field[flr][fcr] = 1;
+	} else {
+		nl--;
+	}
+
+}
+
+
+
+function onCheck() {
+
+
+	var l = Number(document.getElementById("lin").value);
+	var c = Number(document.getElementById("col").value);
+
+	//alert (field[l][c]);
+
+	if (field[l][c] === 1) {
+		document.getElementById("see").innerHTML = "попал";
+		return;
+	}
+
+	var n = 0;
+ 	for (al = 1; al <= 10; al++) { n += field[al][c]; }
+ 	for (ac = 1; ac <= 10; ac++) { n += field[l][ac]; }
+	var dl=0; var dc=0;
+
+        dl=1; dc=1;
+ 	for (ni=1; l+dl*ni <= 10 && l+dl*ni >= 1 && c+dc*ni <= 10 && c+dc*ni >= 1; ni++) { n += field[l+dl*ni][c+dc*ni]; }
+      
+        dl=-1; dc=-1;
+ 	for (ni=1; l+dl*ni <= 10 && l+dl*ni >= 1 && c+dc*ni <= 10 && c+dc*ni >= 1; ni++) { n += field[l+dl*ni][c+dc*ni]; }
+
+	dl=1; dc=-1;
+ 	for (ni=1; l+dl*ni <= 10 && l+dl*ni >= 1 && c+dc*ni <= 10 && c+dc*ni >= 1; ni++) { n += field[l+dl*ni][c+dc*ni]; }
+
+	dl=-1; dc=1;
+ 	for (ni=1; l+dl*ni <= 10 && l+dl*ni >= 1 && c+dc*ni <= 10 && c+dc*ni >= 1; ni++) { n += field[l+dl*ni][c+dc*ni]; }
+
+	document.getElementById("see").innerHTML = n;
+
+}
+</script>
+
+линия: <input type="number" name="lin" id="lin">
+<br>
+колонка: <input type="number" name="col" id="col">
+<br>
+<button onclick="onCheck()">проверить</button>
+<br>
+Вижу: <span id="see"></span>
+</body>
